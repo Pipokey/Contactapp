@@ -1,20 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginForm from './LoginForm';
+import Customers from './Costumers';
+
+const Stack = createStackNavigator();
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authenticatedEmail, setAuthenticatedEmail] = useState('');
+  const [authenticatedPassword, setAuthenticatedPassword] = useState('');
+
+  const handleLogin = (token, email, password) => {
+    
+   
+    
+    setIsLoggedIn(true);
+    setAuthenticatedEmail(email);
+    setAuthenticatedPassword(password);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Log in">
+          {(props) => (
+            <LoginForm
+              {...props}
+              onLogin={(token, email, password) => {
+                handleLogin(token, email, password);
+              }}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="Costumers">
+          {() => (
+            <Customers
+              email={authenticatedEmail}
+              password={authenticatedPassword} 
+            />
+          )}
+        </Stack.Screen>
+      </Stack.Navigator>
       <StatusBar style="auto" />
-    </View>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
