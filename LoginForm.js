@@ -22,21 +22,27 @@ function LoginForm({ onLogin }) {
           password,
         }),
       });
-
+  
       if (response.ok) {
+        const tokenResponse = await response.json();
+        const token = `Bearer ${tokenResponse.authorization.token}`;
+  
         
-        const randomToken = uuidv4(); 
-      
-        onLogin(randomToken, email, password); 
-        navigation.navigate('Costumers'); 
+        onLogin(token, email, password);
+  
+        
+        setEmail('');
+        setPassword('');
+  
+        navigation.navigate('Costumers');
       } else {
-   
         Alert.alert('Login Failed', 'Invalid email or password.');
       }
     } catch (error) {
       console.error('Error:', error);
     }
   }
+  
 
   return (
     <View style={styles.container}>

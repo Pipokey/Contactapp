@@ -81,5 +81,17 @@ export const styles = StyleSheet.create({
   infoText:{
     fontSize:16,
     fontWeight:'500',
-  }
+  },
+  redButton: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight:'700',
+    
+  },
 });

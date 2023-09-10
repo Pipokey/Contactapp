@@ -8,15 +8,12 @@ import Customers from './Costumers';
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState('');
   const [authenticatedEmail, setAuthenticatedEmail] = useState('');
   const [authenticatedPassword, setAuthenticatedPassword] = useState('');
 
   const handleLogin = (token, email, password) => {
-    
-   
-    
-    setIsLoggedIn(true);
+    setToken(token);
     setAuthenticatedEmail(email);
     setAuthenticatedPassword(password);
   };
@@ -24,7 +21,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Log in">
+        <Stack.Screen name="Login">
           {(props) => (
             <LoginForm
               {...props}
@@ -36,10 +33,7 @@ export default function App() {
         </Stack.Screen>
         <Stack.Screen name="Costumers">
           {() => (
-            <Customers
-              email={authenticatedEmail}
-              password={authenticatedPassword} 
-            />
+            <Customers token={token} />
           )}
         </Stack.Screen>
       </Stack.Navigator>
